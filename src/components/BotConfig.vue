@@ -258,7 +258,7 @@ const fetchUsers = async (searchValue) => {
 }
 
 const pairs = ref([])
-
+<!--
 const fetchPairs = async () => {
   try {
     const response = await axios.get(`${apiKey}core/pair/`)
@@ -269,7 +269,25 @@ const fetchPairs = async () => {
     console.log(error) 
   }
 }
+-->
 
+const fetchPairs = async () => {
+  try {
+    let nextUrl = `${apiKey}core/pair/`;
+    // Loop until there are no more pages
+    while (nextUrl) {
+      const response = await axios.get(nextUrl);
+      // console.log('Server response:', response.data);
+      // Assuming 'results' is the key containing pairs in the response
+      response.data.results.map(pair => {
+        pairs.value.push({ value: pair.id, text: pair._label });
+      });
+      // Update the 'nextUrl' for the next page
+      nextUrl = response.data.next;
+    }
+  } catch (error) {
+    console.log(error);
+  }
 const save = async () => {
   let pathSepar = splitAndReplace(removeListSuffix(param.value))
   if(endsWithList(param.value)) 
