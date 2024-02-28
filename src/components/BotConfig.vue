@@ -258,18 +258,6 @@ const fetchUsers = async (searchValue) => {
 }
 
 const pairs = ref([])
-<!--
-const fetchPairs = async () => {
-  try {
-    const response = await axios.get(`${apiKey}core/pair/`)
-    response.data.results.map($ => {
-      pairs.value.push({value: $.id, text: $._label})
-    })
-  } catch (error) {
-    console.log(error) 
-  }
-}
--->
 
 const fetchPairs = async () => {
   try {
