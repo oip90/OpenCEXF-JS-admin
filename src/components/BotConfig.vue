@@ -261,17 +261,14 @@ const pairs = ref([])
 
 const fetchPairs = async () => {
   try {
-    let nextUrl = `${apiKey}core/pair/`;
-    while (nextUrl) {
-      const response = await axios.get(nextUrl);
-      response.data.results.map(pair => {
-        pairs.value.push({ value: pair.id, text: pair._label });
-      });
-      nextUrl = response.data.next;
-    }
+    const response = await axios.get(`${apiKey}core/pair/`)
+    response.data.results.map($ => {
+      pairs.value.push({value: $.id, text: $._label})
+    })
   } catch (error) {
-    console.log(error);
+    console.log(error) 
   }
+}
 
 const save = async () => {
   let pathSepar = splitAndReplace(removeListSuffix(param.value))
